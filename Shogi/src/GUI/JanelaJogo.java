@@ -31,8 +31,28 @@ public class JanelaJogo extends JFrame implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e){
-		
+		switch (e.getActionCommand()){
+		case "Conectar":
+			System.out.print("certo");
+			String nome = solicitaNome();
+			controlador.conectar(nome);
+			System.out.println("conctado");
+			break;
+		}
 	}
 	
-	
+
+	private String solicitaNome(){
+		String nome = JOptionPane.showInputDialog(this, "Insira seu nome");
+		return nome;	
+	}
+
+	public void iniciar(){
+		String jogadorUm = JOptionPane.showInputDialog("Qual o seu nome?");
+		
+		
+	}
+	public void alertaJogador(String mensagem){
+		JOptionPane.showMessageDialog(this, mensagem);
+	}
 }
