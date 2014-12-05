@@ -1,4 +1,5 @@
 package GUI;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,52 +8,71 @@ import javax.swing.*;
 
 import Logica.Controlador;
 
-public class JanelaJogo extends JFrame implements ActionListener{
-	
+public class JanelaJogo extends JFrame implements ActionListener {
+
 	protected Controlador controlador;
 	protected PainelJanelaJogo painel;
 	protected Menu menu;
 	
-	public JanelaJogo(Controlador controlador){
+
+	public JanelaJogo(Controlador controlador) {
 		this.controlador = controlador;
 		menu = new Menu(this);
 		setJMenuBar(menu);
-		//painel = new PainelJanelaJogo();
-		//setContentPane(painel);
+		painel = new PainelJanelaJogo(this);
+		setContentPane(painel);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(500, 550));
-		setResizable(false); 
+		setResizable(false);
 		pack();
 		setLocationRelativeTo(null);
 	}
-	
-	public void interaja(){
+
+	public void interaja() {
 		this.setVisible(true);
 	}
-	
-	public void actionPerformed(ActionEvent e){
-		switch (e.getActionCommand()){
+
+	public void actionPerformed(ActionEvent e) {
+		switch (e.getActionCommand()) {
 		case "Conectar":
-			System.out.print("certo");
-			String nome = solicitaNome();
-			controlador.conectar(nome);
-			System.out.println("conctado");
+			solicitaConexao();
 			break;
+
+		case "Jogar":
+			solicitaInicio();
+			break;
+		case "Desconectar":
+			solicitaDesconexao();
+			break;
+		case "Sair":
+			controlador.desconectar();
+			this.dispose();
 		}
+
+	}
+
+	private void solicitaDesconexao() {
+		controlador.desconectar();
+		
+	}
+
+	private void solicitaConexao() {
+		String nome = JOptionPane.showInputDialog(this, "Insira seu nome");
+		if (nome != null) {
+			if (!(nome.trim().equals(""))) {
+				controlador.conectar(nome);
+			} else {
+				alertaJogador("insira um nome");
+			}
+		}
+
 	}
 	
-
-	private String solicitaNome(){
-		String nome = JOptionPane.showInputDialog(this, "Insira seu nome");
-		return nome;	
+	private void solicitaInicio(){
+		controlador.iniciarPartidaServidor();
 	}
 
-	public void iniciar(){
-		String jogadorUm = JOptionPane.showInputDialog("Qual o seu nome?");
-		
-		
-	}
-	public void alertaJogador(String mensagem){
+	public void alertaJogador(String mensagem) {
 		JOptionPane.showMessageDialog(this, mensagem);
 	}
 }

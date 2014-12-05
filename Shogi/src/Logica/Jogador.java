@@ -6,8 +6,8 @@ public class Jogador {
 	protected boolean vencedor;
 	protected boolean conectado;
 	
-	public Jogador(String nome){
-		this.nome = nome;		
+	public Jogador(){
+		
 	}
 	
 	public String getNome() {
@@ -18,12 +18,16 @@ public class Jogador {
 		this.nome = nome;
 	}
 	
-	public boolean habilitado() {
+	public boolean ishabilitado() {
 		return habilitado;
 	}
 	
-	public void setHabilitado(boolean habilitado) {
-		this.habilitado = habilitado;
+	public void habilita() {
+		this.habilitado = true;
+	}
+	
+	public void desabilita(){
+		this.habilitado = false;
 	}
 	
 	public boolean vencedor() {

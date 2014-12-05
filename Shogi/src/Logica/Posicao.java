@@ -1,9 +1,16 @@
 package Logica;
 
+import Pecas.Peca;
+
 public class Posicao {
 	protected int linha;
 	protected int coluna;
 	protected Peca peca;
+	
+	public Posicao(int linha, int coluna){
+		this.linha = linha;
+		this.coluna = coluna;
+	}
 	
 	public int getLinha() {
 		return linha;
