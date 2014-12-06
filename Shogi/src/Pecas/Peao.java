@@ -1,12 +1,14 @@
 package Pecas;
 
+import javax.swing.ImageIcon;
+
 import Logica.Jogador;
 
 public class Peao extends Peca{
 
 	public Peao(Jogador jogador) {
 		super(jogador);
-		// TODO Auto-generated constructor stub
+		icone = new ImageIcon(cl.getResource("peao.png"));
 	}
 
 	@Override

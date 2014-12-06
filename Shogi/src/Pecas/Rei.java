@@ -1,12 +1,14 @@
 package Pecas;
 
+import javax.swing.ImageIcon;
+
 import Logica.Jogador;
 
 public class Rei extends Peca {
 
 	public Rei(Jogador jogador) {
 		super(jogador);
-
+		icone = new ImageIcon(cl.getResource("rei.png"));
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import Logica.Controlador;
+import Logica.Posicao;
 
 public class JanelaJogo extends JFrame implements ActionListener {
 
@@ -22,7 +23,7 @@ public class JanelaJogo extends JFrame implements ActionListener {
 		painel = new PainelJanelaJogo(this);
 		setContentPane(painel);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setPreferredSize(new Dimension(500, 550));
+		setPreferredSize(new Dimension(600, 600));
 		setResizable(false);
 		pack();
 		setLocationRelativeTo(null);
@@ -74,5 +75,36 @@ public class JanelaJogo extends JFrame implements ActionListener {
 
 	public void alertaJogador(String mensagem) {
 		JOptionPane.showMessageDialog(this, mensagem);
+	}
+	
+	public void aguardandoInicio() {
+		painel.aguardandoInicio();
+			
+	}
+
+	public void imprimeTabuleiro(Posicao[][] tabuleiro) {
+		   painel.imprimeTabuleiro(tabuleiro);
+       remove(painel);
+       this.setContentPane(painel);
+	}
+	
+	public void posicaoClicada(int linha, int coluna) {
+        controlador.posicaoClicada(linha, coluna);
+		
+	}
+	
+	public void criaTabuleiro() {
+		painel.criaTabuleiro();
+		
+	}
+	
+	public void setMensagemPainel(String mensagem) {
+		painel.setMensagem(mensagem);
+		
+	}
+
+	public void setDadosJogadores(String nomeJogador1, String nomeJogador2) {
+		painel.setDadosJogadores(nomeJogador1, nomeJogador2);
+		
 	}
 }

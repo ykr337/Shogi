@@ -1,12 +1,15 @@
 package Pecas;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 import Logica.Jogador;
 
 public class Bispo extends Peca {
 
 	public Bispo(Jogador jogador) {
 		super(jogador);
-		// TODO Auto-generated constructor stub
+		icone = new ImageIcon(cl.getResource("bispo.png"));
 	}
 
 	@Override
@@ -28,4 +31,6 @@ public class Bispo extends Peca {
 
 		return validade;
 	}
+
+	
 }

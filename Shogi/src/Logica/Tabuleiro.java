@@ -2,6 +2,9 @@ package Logica;
 
 import java.awt.geom.GeneralPath;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 import Netgames.Lance;
 import Pecas.*;
 
@@ -21,7 +24,6 @@ public class Tabuleiro {
 			for(int coluna = 0; coluna<9; coluna++){
 				posicoes[linha][coluna] = new Posicao(linha, coluna);
 			}
-		andamento = false;
 		}
 	}
 	
@@ -33,7 +35,7 @@ public class Tabuleiro {
 	
 	private void posicionaPecaLocal() {
 		posicoes[8][0].setPeca(new Lanceiro(jogadorLocal)); 
-		posicoes[8][8].setPeca(new Lanceiro(jogadorLocal)); 
+		posicoes[8][8].setPeca(new Lanceiro(jogadorLocal));
 		posicoes[8][1].setPeca(new Cavalo(jogadorLocal));
 		posicoes[8][7].setPeca(new Cavalo(jogadorLocal));
 		posicoes[8][2].setPeca(new GeneralPrata(jogadorLocal));
@@ -84,7 +86,10 @@ public class Tabuleiro {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	public Posicao[][] getPosicoes(){
+		return posicoes;
+	}
 	
 	
 	}

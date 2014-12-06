@@ -44,6 +44,7 @@ public class Controlador {
 			if(!andamento){
 			atorNetgames.iniciarPartidaRede();
 			tabuleiro.setAndamento(true);
+			janela.aguardandoInicio();
 			} else{
 				janela.alertaJogador("Já há uma partida em andamento");
 			}
@@ -80,25 +81,37 @@ public class Controlador {
 	public void iniciarPartidaRede(int vez) {
 		String nome;
 		Jogador adversario;
+		
 		// De acordo com a vez, habilita ou desabilita jogador
 		// Verificar, processo de criacao do tabuleiro e alocacao de pecas
 		if (vez == 1) {
 			jogador.habilita();
 			nome = atorNetgames.obterNomeAdversario(2);
 			adversario = new Jogador();
+			janela.setMensagemPainel("sua vez!");
 
 		} else {
 			jogador.desabilita();
 			nome = atorNetgames.obterNomeAdversario(1);
 			adversario = new Jogador();
 			adversario.setNome(nome);
+			janela.setMensagemPainel("aguarde sua vez!");
 		}
-
+		janela.criaTabuleiro();
+		tabuleiro.inicializar(jogador, adversario);
+		janela.setDadosJogadores(jogador.getNome(), adversario.getNome());
+		Posicao[][] tabuleiroInterface = tabuleiro.getPosicoes();
+		janela.imprimeTabuleiro(tabuleiroInterface);
 	}
 
 	public void enviarJogada(Lance lance) {
 		atorNetgames.enviarJogada(lance);
 		jogador.desabilita();
+	}
+
+	public void posicaoClicada(int linha, int coluna) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
