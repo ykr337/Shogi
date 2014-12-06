@@ -13,7 +13,7 @@ public class Bispo extends Peca {
 	}
 
 	@Override
-	boolean movimentacao(int linhaAtual, int colunaAtual, int linhaFinal,
+	public boolean movimentacao(int linhaAtual, int colunaAtual, int linhaFinal,
 			int colunaFinal) {
 		boolean validade;
 

@@ -2,7 +2,8 @@ package Logica;
 
 import GUI.JanelaJogo;
 import Netgames.AtorNetgames;
-import Netgames.Lance;
+import Netgames.JogadaValida;
+import Pecas.Peca;
 
 public class Controlador {
 	protected JanelaJogo janela;
@@ -54,9 +55,11 @@ public class Controlador {
 		}
 	}
 
-	public void receberLance(Lance lance) {
+	public void receberLance(JogadaValida lance) {
 		tabuleiro.receberLance(lance);
-		jogador.desabilita();
+		jogador.habilita();
+		janela.imprimeTabuleiro(tabuleiro.getPosicoes());
+		janela.setMensagemPainel("sua vez!");
 
 	}
 
@@ -99,19 +102,98 @@ public class Controlador {
 		}
 		janela.criaTabuleiro();
 		tabuleiro.inicializar(jogador, adversario);
+		tabuleiro.setAndamento(true);
 		janela.setDadosJogadores(jogador.getNome(), adversario.getNome());
 		Posicao[][] tabuleiroInterface = tabuleiro.getPosicoes();
 		janela.imprimeTabuleiro(tabuleiroInterface);
 	}
 
-	public void enviarJogada(Lance lance) {
+	public void enviarJogada(JogadaValida lance) {
 		atorNetgames.enviarJogada(lance);
 		jogador.desabilita();
 	}
 
 	public void posicaoClicada(int linha, int coluna) {
-		// TODO Auto-generated method stub
+		boolean andamento = tabuleiro.getAndamento();
+		boolean habilitado = jogador.ishabilitado();
+		boolean temPecaNaPosicao = tabuleiro.temPecaNaPosicao(linha, coluna);
+		boolean temPecaSelecionada = tabuleiro.getHaPecaSelecionada();
+		boolean valido;
+		if(andamento){
+			if(habilitado){
+				if(temPecaNaPosicao){
+					boolean pertence = tabuleiro.pertenceAoJogador(jogador, linha,coluna);
+					if(pertence){
+						tabuleiro.selecionaPeca(linha, coluna);
+					}else{
+						if(temPecaSelecionada){
+							valido = realizaJogada(linha, coluna, temPecaNaPosicao, tabuleiro);
+								if(valido){
+									Posicao atual = tabuleiro.getPosicaoSelecionada();
+									JogadaValida jogada = new JogadaValida(atual.getLinha(), atual.getColuna(), linha, coluna);
+									passarVez(jogada);
+								}else{
+									janela.alertaJogador("Jogada Invalida");
+								}
+						}else{
+							janela.alertaJogador("Peca do Adversario");
+						}
+					}
+				}else{
+					if(temPecaSelecionada){
+						valido = realizaJogada(linha, coluna, temPecaNaPosicao, tabuleiro);
+						if(valido){
+							Posicao atual = tabuleiro.getPosicaoSelecionada();
+							JogadaValida jogada = new JogadaValida(atual.getLinha(), atual.getColuna(), linha, coluna);
+							passarVez(jogada);
+						}else{
+							janela.alertaJogador("Jogada Invalida");
+						}
+					}else{
+						janela.alertaJogador("voce ainda nao possui uma peca selecionada");
+					}
+				}
+			}else{
+				janela.alertaJogador("Não é a sua vez!");
+			}
+		}else{
+			janela.alertaJogador("Não há uma partida em andamento");
+		}
 		
+	}
+
+	private void passarVez(JogadaValida jogada) {
+		jogador.desabilita();
+		boolean fim = verificaVencedor();
+		if(fim){
+			encerrarPartida();
+			atorNetgames.enviarJogada(jogada);
+			janela.alertaJogador("voce venceu");
+		}else{
+		atorNetgames.enviarJogada(jogada);
+		janela.setMensagemPainel("Aguardando Adversario");
+		janela.imprimeTabuleiro(tabuleiro.getPosicoes());
+		}
+		
+		
+	}
+
+	private void encerrarPartida() {
+		tabuleiro.setAndamento(false);
+		
+	}
+
+	private boolean verificaVencedor() {
+		boolean vencedor = tabuleiro.getReiMorto();
+		return vencedor;
+	}
+
+	private boolean realizaJogada(int linha, int coluna, boolean temPecaNaPosicao,
+				Tabuleiro tabuleiro) {
+		boolean valido;	
+		Lance lance = new Lance(linha, coluna, temPecaNaPosicao, tabuleiro);
+			valido = lance.tratarLance();
+			return valido;
 	}
 
 }

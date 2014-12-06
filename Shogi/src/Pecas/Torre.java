@@ -11,7 +11,7 @@ public class Torre extends Peca{
 		icone = new ImageIcon(cl.getResource("torre.png"));	}
 
 	@Override
-	boolean movimentacao(int linhaAtual, int colunaAtual, int linhaFinal,
+	public boolean movimentacao(int linhaAtual, int colunaAtual, int linhaFinal,
 			int colunaFinal) {
 		boolean validade;
 		if(linhaFinal == linhaAtual || colunaFinal == colunaAtual){

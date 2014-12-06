@@ -68,8 +68,7 @@ public class PainelJanelaJogo extends JPanel {
 	}
 
 	private void selecionaPosicao(int linha, int coluna) {
-		System.out.println("ta funfando carai");
-
+		janelaJogo.posicaoClicada(linha, coluna);
 	}
 
 	public void aguardandoInicio() {

@@ -57,7 +57,7 @@ public class AtorNetgames implements OuvidorProxy {
 	}
 
 	// metodo que envia a jogada para o outro jogador
-	public void enviarJogada(Lance lance) {
+	public void enviarJogada(JogadaValida lance) {
 		try {
 			proxy.enviaJogada(lance);
 		} catch (NaoJogandoException e) {
@@ -67,7 +67,7 @@ public class AtorNetgames implements OuvidorProxy {
 
 	// recebe a jogada enviada pelo outro jogador e manda para o controlador.
 	public void receberJogada(Jogada jogada) {
-		Lance lance = (Lance) jogada;
+		JogadaValida lance = (JogadaValida) jogada;
 		controlador.receberLance(lance);
 
 	}

@@ -12,7 +12,7 @@ public class Lanceiro extends Peca {
 	}
 
 	@Override
-	boolean movimentacao(int linhaAtual, int colunaAtual, int linhaFinal,
+	public boolean movimentacao(int linhaAtual, int colunaAtual, int linhaFinal,
 			int colunaFinal) {
 		boolean validade;
 		if (!(linhaFinal > linhaAtual)) {

@@ -12,7 +12,7 @@ public class Peao extends Peca{
 	}
 
 	@Override
-	boolean movimentacao(int linhaAtual, int colunaAtual, int linhaFinal, int colunaFinal) {
+	public boolean movimentacao(int linhaAtual, int colunaAtual, int linhaFinal, int colunaFinal) {
 		boolean validade;
 		if(linhaFinal==linhaAtual-1 && colunaFinal==colunaAtual){
 			validade = true;

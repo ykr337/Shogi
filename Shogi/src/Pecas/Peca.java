@@ -16,7 +16,7 @@ public abstract class Peca {
 		cl = this.getClass().getClassLoader();
 	}
 	
-	abstract boolean movimentacao(int linhaAtual, int colunaAtual, int linhaFinal, int colunaFinal);
+	public abstract boolean movimentacao(int linhaAtual, int colunaAtual, int linhaFinal, int colunaFinal);
 	
 	
 	
@@ -24,4 +24,7 @@ public abstract class Peca {
 	return icone;
 	}
 	
+	public Jogador getJogador(){
+		return this.jogador;
+	}
 }
