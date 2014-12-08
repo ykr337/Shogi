@@ -16,8 +16,8 @@ public class Tabuleiro {
 	// protected boolean pecaSelecionada;
 	protected Jogador jogadorLocal;
 	protected Jogador jogadorRemoto;
-	protected boolean reiMorto= false;
-
+	protected boolean reiMorto = false;
+	
 	public Tabuleiro() {
 		// jogadorLocal= jogador1;
 		// jogadorRemoto = jogador2;
@@ -87,11 +87,9 @@ public class Tabuleiro {
 	public void receberLance(JogadaValida lance) {
 		int linhaInicio = 8 - lance.getLinhaInicio();
 		int linhaFim = 8 - lance.getLinhaFim();
-		int colunaInicio = 8 -lance.getColunaInicio();
+		int colunaInicio = 8 - lance.getColunaInicio();
 		int colunaFim = 8 - lance.getColunaFim();
-		
-		
-		
+
 		Peca peca = posicoes[linhaInicio][colunaInicio].getPeca();
 		alocapeca(linhaFim, colunaFim, peca);
 		removePeca(linhaInicio, colunaInicio);
@@ -140,24 +138,29 @@ public class Tabuleiro {
 	public Posicao getPosicaoSelecionada() {
 		return this.posicaoSelecionada;
 	}
-	
-	public void alocapeca(int linha, int coluna, Peca peca){
+
+	public void alocapeca(int linha, int coluna, Peca peca) {
 		posicoes[linha][coluna].setPeca(peca);
 	}
-	
-	public void removePeca(int linha, int coluna){
+
+	public void removePeca(int linha, int coluna) {
 		posicoes[linha][coluna].setPeca(null);
 	}
-	
-	public Peca GetPecaNaPosicao(int linha, int coluna){
+
+	public Peca GetPecaNaPosicao(int linha, int coluna) {
 		return posicoes[linha][coluna].getPeca();
 	}
-	
-	public void reiMorto(){
+
+	public void reiMorto() {
 		reiMorto = true;
 	}
-	
-	public boolean getReiMorto(){
+
+	public boolean getReiMorto() {
 		return reiMorto;
+	}
+
+	public void retiraPosicaoSelecionada() {
+		posicaoSelecionada = null;
+		haPecaSelecionada = false;
 	}
 }

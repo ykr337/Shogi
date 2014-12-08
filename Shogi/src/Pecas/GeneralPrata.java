@@ -1,10 +1,13 @@
 package Pecas;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import Logica.Jogador;
 
 public class GeneralPrata extends Peca {
+
+
 
 	public GeneralPrata(Jogador jogador) {
 		super(jogador);

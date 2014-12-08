@@ -3,7 +3,6 @@ package Logica;
 import GUI.JanelaJogo;
 import Netgames.AtorNetgames;
 import Netgames.JogadaValida;
-import Pecas.Peca;
 
 public class Controlador {
 	protected JanelaJogo janela;
@@ -40,17 +39,16 @@ public class Controlador {
 	public void iniciarPartidaServidor() {
 		boolean conectado = jogador.conectado();
 		boolean andamento = tabuleiro.getAndamento();
-		
+
 		if (conectado) {
-			if(!andamento){
-			atorNetgames.iniciarPartidaRede();
-			tabuleiro.setAndamento(true);
-			janela.aguardandoInicio();
-			} else{
+			if (!andamento) {
+				atorNetgames.iniciarPartidaRede();
+				janela.aguardandoInicio();
+			} else {
 				janela.alertaJogador("Já há uma partida em andamento");
 			}
-			
-		} else{
+
+		} else {
 			janela.alertaJogador("você não está conectado");
 		}
 	}
@@ -64,14 +62,19 @@ public class Controlador {
 	}
 
 	public void desconectar() {
-		boolean andamento = tabuleiro.getAndamento();
-		if (andamento) {
-			finalizaPartida();
-		} else {
-			String problema = atorNetgames.desconectar();
-			if (problema != null) {
-				janela.alertaJogador("você nao está conectado");
+		boolean conexao = jogador.conectado();
+		if (conexao) {
+			boolean andamento = tabuleiro.getAndamento();
+			if (andamento) {
+				finalizaPartida();
+				janela.setMensagemPainel("Partida Finalizada por desconexão");
+			} else {
+				atorNetgames.desconectar();
+				jogador.setConectado(false);
+				janela.alertaJogador("Desconectado com sucesso");
 			}
+		} else {
+			janela.alertaJogador("Você não está conectado");
 		}
 	}
 
@@ -84,7 +87,7 @@ public class Controlador {
 	public void iniciarPartidaRede(int vez) {
 		String nome;
 		Jogador adversario;
-		
+		tabuleiro.setAndamento(true);
 		// De acordo com a vez, habilita ou desabilita jogador
 		// Verificar, processo de criacao do tabuleiro e alocacao de pecas
 		if (vez == 1) {
@@ -103,7 +106,6 @@ public class Controlador {
 		janela.criaTabuleiro();
 		tabuleiro.inicializar(jogador, adversario);
 		tabuleiro.setAndamento(true);
-		janela.setDadosJogadores(jogador.getNome(), adversario.getNome());
 		Posicao[][] tabuleiroInterface = tabuleiro.getPosicoes();
 		janela.imprimeTabuleiro(tabuleiroInterface);
 	}
@@ -119,68 +121,76 @@ public class Controlador {
 		boolean temPecaNaPosicao = tabuleiro.temPecaNaPosicao(linha, coluna);
 		boolean temPecaSelecionada = tabuleiro.getHaPecaSelecionada();
 		boolean valido;
-		if(andamento){
-			if(habilitado){
-				if(temPecaNaPosicao){
-					boolean pertence = tabuleiro.pertenceAoJogador(jogador, linha,coluna);
-					if(pertence){
+		if (andamento) {
+			if (habilitado) {
+				if (temPecaNaPosicao) {
+					boolean pertence = tabuleiro.pertenceAoJogador(jogador,
+							linha, coluna);
+					if (pertence) {
 						tabuleiro.selecionaPeca(linha, coluna);
-					}else{
-						if(temPecaSelecionada){
-							valido = realizaJogada(linha, coluna, temPecaNaPosicao, tabuleiro);
-								if(valido){
-									Posicao atual = tabuleiro.getPosicaoSelecionada();
-									JogadaValida jogada = new JogadaValida(atual.getLinha(), atual.getColuna(), linha, coluna);
-									passarVez(jogada);
-								}else{
-									janela.alertaJogador("Jogada Invalida");
-								}
-						}else{
+					} else {
+						if (temPecaSelecionada) {
+							valido = realizaJogada(linha, coluna,
+									temPecaNaPosicao, tabuleiro);
+							if (valido) {
+								Posicao atual = tabuleiro
+										.getPosicaoSelecionada();
+								JogadaValida jogada = new JogadaValida(
+										atual.getLinha(), atual.getColuna(),
+										linha, coluna);
+								passarVez(jogada);
+							} else {
+								janela.alertaJogador("Jogada Invalida");
+							}
+						} else {
 							janela.alertaJogador("Peca do Adversario");
 						}
 					}
-				}else{
-					if(temPecaSelecionada){
-						valido = realizaJogada(linha, coluna, temPecaNaPosicao, tabuleiro);
-						if(valido){
+				} else {
+					if (temPecaSelecionada) {
+						valido = realizaJogada(linha, coluna, temPecaNaPosicao,
+								tabuleiro);
+						if (valido) {
 							Posicao atual = tabuleiro.getPosicaoSelecionada();
-							JogadaValida jogada = new JogadaValida(atual.getLinha(), atual.getColuna(), linha, coluna);
+							JogadaValida jogada = new JogadaValida(
+									atual.getLinha(), atual.getColuna(), linha,
+									coluna);
 							passarVez(jogada);
-						}else{
+						} else {
 							janela.alertaJogador("Jogada Invalida");
 						}
-					}else{
+					} else {
 						janela.alertaJogador("voce ainda nao possui uma peca selecionada");
 					}
 				}
-			}else{
+			} else {
 				janela.alertaJogador("Não é a sua vez!");
 			}
-		}else{
+		} else {
 			janela.alertaJogador("Não há uma partida em andamento");
 		}
-		
+
 	}
 
 	private void passarVez(JogadaValida jogada) {
 		jogador.desabilita();
+		tabuleiro.retiraPosicaoSelecionada();
 		boolean fim = verificaVencedor();
-		if(fim){
+		if (fim) {
 			encerrarPartida();
 			atorNetgames.enviarJogada(jogada);
 			janela.alertaJogador("voce venceu");
-		}else{
-		atorNetgames.enviarJogada(jogada);
-		janela.setMensagemPainel("Aguardando Adversario");
-		janela.imprimeTabuleiro(tabuleiro.getPosicoes());
+		} else {
+			atorNetgames.enviarJogada(jogada);
+			janela.setMensagemPainel("Aguardando Adversario");
+			janela.imprimeTabuleiro(tabuleiro.getPosicoes());
 		}
-		
-		
+
 	}
 
 	private void encerrarPartida() {
 		tabuleiro.setAndamento(false);
-		
+
 	}
 
 	private boolean verificaVencedor() {
@@ -188,12 +198,18 @@ public class Controlador {
 		return vencedor;
 	}
 
-	private boolean realizaJogada(int linha, int coluna, boolean temPecaNaPosicao,
-				Tabuleiro tabuleiro) {
-		boolean valido;	
+	private boolean realizaJogada(int linha, int coluna,
+			boolean temPecaNaPosicao, Tabuleiro tabuleiro) {
+		boolean valido;
 		Lance lance = new Lance(linha, coluna, temPecaNaPosicao, tabuleiro);
-			valido = lance.tratarLance();
-			return valido;
+		valido = lance.tratarLance();
+		return valido;
+	}
+
+	public void finalizarPartidaComErro() {
+		finalizaPartida();
+		janela.setMensagemPainel("Partida finalizada por desconexão");
+		
 	}
 
 }

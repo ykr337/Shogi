@@ -32,14 +32,6 @@ public class PainelJanelaJogo extends JPanel {
 		lMensagem = new JLabel();
 		lMensagem.setBounds(new Rectangle(10, 0, 200, 60));
 		this.add(lMensagem);
-
-		lNomeJogadorUm = new JLabel();
-		lNomeJogadorUm.setBounds(new Rectangle(30, 0, 200, 100));
-		this.add(lNomeJogadorUm);
-
-		lNomeJogadorDois = new JLabel();
-		lNomeJogadorDois.setBounds(new Rectangle(320, 420, 200, 60));
-		this.add(lNomeJogadorDois);
 	}
 
 	public void criaTabuleiro() {
@@ -52,7 +44,7 @@ public class PainelJanelaJogo extends JPanel {
 				final Integer auxColuna = coluna;
 				tabuleiro[linha][coluna] = new JLabel();
 				tabuleiro[linha][coluna].setBounds(new Rectangle(x, y, 50, 50));
-				//tabuleiro[linha][coluna].setIcon(vazio);
+				// tabuleiro[linha][coluna].setIcon(vazio);
 				x += 50;
 				this.add(tabuleiro[linha][coluna]);
 				tabuleiro[linha][coluna]
@@ -76,12 +68,13 @@ public class PainelJanelaJogo extends JPanel {
 	}
 
 	public void imprimeTabuleiro(Posicao[][] tabuleiroInterface) {
-		for(int linha = 0; linha < 9; linha++){
-			for(int coluna = 0; coluna < 9; coluna++){
-				if(tabuleiroInterface[linha][coluna].getPeca() == null){
+		for (int linha = 0; linha < 9; linha++) {
+			for (int coluna = 0; coluna < 9; coluna++) {
+				if (tabuleiroInterface[linha][coluna].getPeca() == null) {
 					tabuleiro[linha][coluna].setIcon(vazio);
-				}else{
-					Icon icone = tabuleiroInterface[linha][coluna].getPeca().getIcone();
+				} else {
+					Icon icone = tabuleiroInterface[linha][coluna].getPeca()
+							.getIcone();
 					tabuleiro[linha][coluna].setIcon(icone);
 				}
 			}
@@ -92,11 +85,5 @@ public class PainelJanelaJogo extends JPanel {
 	public void setMensagem(String mensagem) {
 		lMensagem.setText(mensagem);
 
-	}
-
-	public void setDadosJogadores(String nomeJogador1, String nomeJogador2) {
-		lNomeJogadorUm.setText(nomeJogador1);
-		lNomeJogadorDois.setText(nomeJogador2);
-		
 	}
 }

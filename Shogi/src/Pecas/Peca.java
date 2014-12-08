@@ -9,11 +9,11 @@ import javax.swing.ImageIcon;
 public abstract class Peca {
 	protected Jogador jogador;
 	protected Icon icone;
-	ClassLoader cl;
+	ClassLoader cl = this.getClass().getClassLoader();	
 	
 	public Peca(Jogador jogador){
 		this.jogador=jogador;
-		cl = this.getClass().getClassLoader();
+		
 	}
 	
 	public abstract boolean movimentacao(int linhaAtual, int colunaAtual, int linhaFinal, int colunaFinal);
@@ -21,10 +21,11 @@ public abstract class Peca {
 	
 	
 	public Icon getIcone(){
-	return icone;
+	return this.icone;
 	}
 	
 	public Jogador getJogador(){
 		return this.jogador;
 	}
+	
 }

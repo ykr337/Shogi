@@ -7,10 +7,14 @@ import Logica.Jogador;
 
 public class Bispo extends Peca {
 
+	
+
+	
+
 	public Bispo(Jogador jogador) {
 		super(jogador);
 		icone = new ImageIcon(cl.getResource("bispo.png"));
-	}
+		}
 
 	@Override
 	public boolean movimentacao(int linhaAtual, int colunaAtual, int linhaFinal,

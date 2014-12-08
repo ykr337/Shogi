@@ -1,15 +1,18 @@
 package Pecas;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import Logica.Jogador;
 
 public class Lanceiro extends Peca {
 
+
+
 	public Lanceiro(Jogador jogador) {
 		super(jogador);
 		icone = new ImageIcon(cl.getResource("lanceiro.png"));
-	}
+		}
 
 	@Override
 	public boolean movimentacao(int linhaAtual, int colunaAtual, int linhaFinal,

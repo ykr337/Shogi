@@ -103,8 +103,5 @@ public class JanelaJogo extends JFrame implements ActionListener {
 		
 	}
 
-	public void setDadosJogadores(String nomeJogador1, String nomeJogador2) {
-		painel.setDadosJogadores(nomeJogador1, nomeJogador2);
-		
-	}
+	
 }

@@ -7,6 +7,10 @@ import Logica.Jogador;
 
 public class Cavalo extends Peca {
 
+	
+
+	
+
 	public Cavalo(Jogador jogador) {
 		super(jogador);
 		icone = new ImageIcon(cl.getResource("cavalo.png"));
@@ -20,7 +24,7 @@ public class Cavalo extends Peca {
 		if(linhaFinal == linhaAtual-2 &&(colunaFinal == colunaAtual+1 || colunaFinal == colunaAtual-1)){
 			validade = true;
 		}else{
-			validade = true;
+			validade = false;
 		}
 		return validade;
 	}

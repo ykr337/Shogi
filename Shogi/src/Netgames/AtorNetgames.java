@@ -72,14 +72,13 @@ public class AtorNetgames implements OuvidorProxy {
 
 	}
 
-	public String desconectar() {
-		String problema = null;
+	public void desconectar() {
+		
 		try {
 			proxy.desconectar();
 		} catch (NaoConectadoException e) {
-			problema = e.getLocalizedMessage();
 		}
-		return problema;
+		
 	}
 
 	// Metodo que recebe a mensagem de inicio do metodo IniciarPartidaRede()
@@ -91,7 +90,7 @@ public class AtorNetgames implements OuvidorProxy {
 	}
 
 	public void finalizarPartidaComErro(String message) {
-		// TODO Auto-generated method stub
+		controlador.finalizarPartidaComErro();
 
 	}
 
